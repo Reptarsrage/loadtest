@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "msjsdiag.debugger-for-chrome",
+    "octref.vetur",
+    "dzannotti.vscode-babel-coloring",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}
