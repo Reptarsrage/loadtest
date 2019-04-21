@@ -31,7 +31,18 @@ const state = {
     }
   ],
   url: "",
-  body: ""
+  body: "",
+  options: {
+    valid: false,
+    maxRequests: null,
+    concurrency: null,
+    maxSeconds: null,
+    timeout: 0,
+    requestsPerSecond: null,
+    agentKeepAlive: null,
+    indexParam: null,
+    insecure: null
+  }
 };
 
 const getters = {
@@ -41,7 +52,8 @@ const getters = {
   body: state => state.body,
   queryItems: state => state.queryItems,
   headerItems: state => state.headerItems,
-  cookies: state => state.cookies
+  cookies: state => state.cookies,
+  options: state => state.options
 };
 
 const actions = {
@@ -86,7 +98,8 @@ const actions = {
     commit("newCookie", cookie);
   },
   removeCookie: ({ commit }, id) => commit("removeCookie", id),
-  updateCookie: ({ commit }, cookie) => commit("updateCookie", cookie)
+  updateCookie: ({ commit }, cookie) => commit("updateCookie", cookie),
+  updateOptions: ({ commit }, options) => commit("updateOptions", options)
 };
 
 const mutations = {
@@ -113,7 +126,8 @@ const mutations = {
   updateCookie: (state, cookieItem) => {
     const idx = state.cookies.findIndex(item => item.id === cookieItem.id);
     state.cookies[idx] = cookieItem;
-  }
+  },
+  updateOptions: (state, options) => (state.options = options)
 };
 
 export default {

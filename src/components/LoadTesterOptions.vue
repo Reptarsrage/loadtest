@@ -1,10 +1,12 @@
 <template>
-  <v-form v-model="valid">
+  <v-form v-model="options.valid">
     <v-container>
       <v-layout wrap>
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="maxRequests"
+            v-model="options.maxRequests"
+            :value="options.maxRequests"
+            @input="updateOptions(options)"
             min="1"
             label="Max results"
             hint="A max number of requests; after they are reached the test will end"
@@ -14,7 +16,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="concurrency"
+            v-model="options.concurrency"
+            :value="options.concurrency"
+            @input="updateOptions(options)"
             min="1"
             label="Concurrency"
             hint="How many clients to start in parallel"
@@ -24,7 +28,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="maxSeconds"
+            v-model="options.maxSeconds"
+            :value="options.maxSeconds"
+            @input="updateOptions(options)"
             min="1"
             label="Max seconds"
             hint="How long to run the tests"
@@ -34,7 +40,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="requestsPerSecond"
+            v-model="options.requestsPerSecond"
+            :value="options.requestsPerSecond"
+            @input="updateOptions(options)"
             :rules="[requestsPerSecondRule]"
             min="1"
             label="Max requests per second"
@@ -45,7 +53,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="timeout"
+            v-model="options.timeout"
+            :value="options.timeout"
+            @input="updateOptions(options)"
             min="1"
             label="Timeout"
             hint="Timeout for each generated request in milliseconds. Setting this to 0 disables timeout"
@@ -56,7 +66,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="indexParam"
+            v-model="options.indexParam"
+            :value="options.indexParam"
+            @input="updateOptions(options)"
             label="Index Param"
             hint="The given string will be replaced in the final URL with a unique index"
           />
@@ -64,7 +76,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-checkbox
-            v-model="agentKeepAlive"
+            v-model="options.agentKeepAlive"
+            :value="options.agentKeepAlive"
+            @change="updateOptions(options)"
             label="Agent Keep Alive"
             hint="Use an agent with 'Connection: Keep-alive'"
           />
@@ -72,7 +86,9 @@
 
         <v-flex xs12 md4 lg2>
           <v-checkbox
-            v-model="insecure"
+            v-model="options.insecure"
+            :value="options.insecure"
+            @change="updateOptions(options)"
             label="Insecure"
             hint="Allow invalid and self-signed certificates over https"
           />
@@ -83,23 +99,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "LoadTesterOptions",
-  data: () => ({
-    valid: false,
-    maxRequests: null,
-    concurrency: null,
-    maxSeconds: null,
-    timeout: 0,
-    requestsPerSecond: null,
-    agentKeepAlive: null,
-    indexParam: null,
-    insecure: null
-  }),
-  computed: mapGetters(["url"]),
+  computed: mapGetters(["url", "options"]),
   methods: {
+    ...mapActions(["updateOptions"]),
     requestsPerSecondRule(v) {
       return (
         !(this.url.startsWith("ws:") && v) ||
