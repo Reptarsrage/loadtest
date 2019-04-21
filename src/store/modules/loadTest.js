@@ -1,7 +1,7 @@
 import uuid from "uuid";
 
 const state = {
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS", "HEAD"],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   method: "GET",
   queryItems: [
     {

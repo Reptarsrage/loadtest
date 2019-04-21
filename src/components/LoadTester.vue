@@ -2,12 +2,23 @@
   <v-container>
     <v-layout text-xs-center wrap>
       <v-flex xs2>
-        <v-select solo :items="methods" :value="method" @input="updateMethod" />
+        <v-select
+          solo
+          label="Method"
+          hint="The method to use"
+          :items="methods"
+          :value="method"
+          @input="updateMethod"
+        />
       </v-flex>
       <v-flex xs10>
         <v-text-field
           solo
           placeholder="https://api.meredith.services/v1/api"
+          label="Url"
+          hint="Mandatory URL to access"
+          required
+          :rules="urlRules"
           :value="url"
           @input="updateUrl"
         />
@@ -15,9 +26,13 @@
     </v-layout>
 
     <v-tabs>
+      <v-tab>Options</v-tab>
       <v-tab>Body</v-tab>
       <v-tab>Query</v-tab>
       <v-tab>Headers</v-tab>
+      <v-tab-item>
+        <LoadTesterOptions />
+      </v-tab-item>
       <v-tab-item>
         <v-textarea
           hint="paste in body content"
@@ -53,10 +68,21 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import ListOfKeyValues from "./ListOfKeyValues";
+import LoadTesterOptions from "./LoadTesterOptions";
 
 export default {
   name: "LoadTester",
-  components: { ListOfKeyValues },
+  data: () => ({
+    urlRules: [
+      v => !!v || "Url is required",
+      v =>
+        v.startsWith("http://") ||
+        v.startsWith("https://") ||
+        v.startsWith("ws://") ||
+        "Invalid Url, must be http://, https:// or ws://"
+    ]
+  }),
+  components: { ListOfKeyValues, LoadTesterOptions },
   methods: {
     ...mapActions([
       "updateMethod",
