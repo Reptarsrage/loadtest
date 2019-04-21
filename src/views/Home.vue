@@ -1,13 +1,13 @@
 <template>
-  <HelloWorld />
+  <LoadTester />
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld";
+import LoadTester from "../components/LoadTester";
 
 export default {
   components: {
-    HelloWorld
+    LoadTester
   }
 };
 </script>
