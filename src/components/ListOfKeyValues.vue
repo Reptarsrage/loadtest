@@ -1,11 +1,11 @@
 <template>
   <v-list>
     <template v-for="(item, index) in items">
-      <v-layout row wrap :key="item.id">
+      <v-layout row :key="item.id">
         <v-flex grow class="list-item">
           <v-text-field
             hide-details
-            placeholder="name"
+            placeholder="Name"
             v-model="item.name"
             :disabled="!item.enabled"
             :value="item.name"
@@ -16,7 +16,7 @@
         <v-flex grow class="list-item">
           <v-text-field
             hide-details
-            placeholder="value"
+            placeholder="Value"
             :disabled="!item.enabled"
             v-model="item.value"
             :value="item.value"
@@ -24,26 +24,27 @@
             @input="$emit('update', item)"
           />
         </v-flex>
-        <v-flex shrink v-if="index !== items.length - 1">
+        <v-flex shrink :class="{ hidden: index === items.length - 1 }">
           <v-checkbox
             hide-details
             v-model="item.enabled"
+            :disabled="index === items.length - 1"
             :value="item.enabled"
             @change="$emit('update', item)"
           />
         </v-flex>
-        <v-flex shrink v-if="index !== items.length - 1">
+        <v-flex shrink :class="{ hidden: index === items.length - 1 }">
           <v-checkbox
             hide-details
             off-icon="delete"
             on-icon="warning"
             color="warning"
             v-model="item.confirm"
+            :disabled="index === items.length - 1"
             :value="item.confirm"
             @change="confirmRemove(item)"
           />
         </v-flex>
-        <v-flex shrink v-else class="placeholder-for-buttons" />
       </v-layout>
     </template>
   </v-list>
@@ -74,8 +75,8 @@ export default {
 </script>
 
 <style scoped>
-.placeholder-for-buttons {
-  width: 104px;
+.hidden {
+  opacity: 0;
 }
 .list-item {
   padding: 0 8px;
