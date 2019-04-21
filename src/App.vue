@@ -2,22 +2,25 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Load</span>
+        <span class="font-weight-light">Tester</span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-      </v-btn>
     </v-toolbar>
 
     <v-content>
       <router-view />
     </v-content>
+
+    <v-footer>
+      <v-layout align-center justify-center>
+        <v-img
+          :src="require('./assets/meredith.svg')"
+          alt="meredith"
+          contain
+          height="30"
+        />
+      </v-layout>
+    </v-footer>
   </v-app>
 </template>
 
