@@ -4,6 +4,7 @@
     "octref.vetur",
     "dzannotti.vscode-babel-coloring",
     "dbaeumer.vscode-eslint",
+    "vuetifyjs.vuetify-vscode",
     "esbenp.prettier-vscode"
   ]
 }
