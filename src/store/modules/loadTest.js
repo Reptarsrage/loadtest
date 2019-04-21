@@ -8,7 +8,8 @@ const state = {
       id: uuid.v4(),
       name: "",
       value: "",
-      enabled: true
+      enabled: true,
+      confirm: null
     }
   ],
   headerItems: [
@@ -16,7 +17,17 @@ const state = {
       id: uuid.v4(),
       name: "",
       value: "",
-      enabled: true
+      enabled: true,
+      confirm: null
+    }
+  ],
+  cookies: [
+    {
+      id: uuid.v4(),
+      name: "",
+      value: "",
+      enabled: true,
+      confirm: null
     }
   ],
   url: "",
@@ -29,7 +40,8 @@ const getters = {
   url: state => state.url,
   body: state => state.body,
   queryItems: state => state.queryItems,
-  headerItems: state => state.headerItems
+  headerItems: state => state.headerItems,
+  cookies: state => state.cookies
 };
 
 const actions = {
@@ -41,33 +53,40 @@ const actions = {
       id: uuid.v4(),
       name: "",
       value: "",
-      enabled: true
+      enabled: true,
+      confirm: null
     };
 
     commit("newQuery", queryItem);
   },
   removeQuery: ({ commit }, id) => commit("removeQuery", id),
-  toggleQueryEnabled: ({ commit }, id) => commit("toggleQueryEnabled", id),
-  updateQueryName: ({ commit }, id, name) =>
-    commit("updateQueryName", id, name),
-  updateQueryValue: ({ commit }, id, value) =>
-    commit("updateQueryValue", id, value),
+  updateQuery: ({ commit }, queryItem) => commit("updateQuery", queryItem),
   addHeader: ({ commit }) => {
     const headerItem = {
       id: uuid.v4(),
       name: "",
       value: "",
-      enabled: true
+      enabled: true,
+      confirm: null
     };
 
     commit("newHeader", headerItem);
   },
   removeHeader: ({ commit }, id) => commit("removeHeader", id),
-  toggleHeaderEnabled: ({ commit }, id) => commit("toggleHeaderEnabled", id),
-  updateHeaderName: ({ commit }, id, name) =>
-    commit("updateHeaderName", id, name),
-  updateHeaderValue: ({ commit }, id, value) =>
-    commit("updateHeaderValue", id, value)
+  updateHeader: ({ commit }, headerItem) => commit("updateHeader", headerItem),
+  addCookie: ({ commit }) => {
+    const cookie = {
+      id: uuid.v4(),
+      name: "",
+      value: "",
+      enabled: true,
+      confirm: null
+    };
+
+    commit("newCookie", cookie);
+  },
+  removeCookie: ({ commit }, id) => commit("removeCookie", id),
+  updateCookie: ({ commit }, cookie) => commit("updateCookie", cookie)
 };
 
 const mutations = {
@@ -77,32 +96,23 @@ const mutations = {
   newQuery: (state, newItem) => state.queryItems.push(newItem),
   removeQuery: (state, id) =>
     (state.queryItems = state.queryItems.filter(item => item.id !== id)),
-  toggleQueryEnabled: (state, id) => {
-    const idx = state.queryItems.findIndex(item => item.id === id);
-    state.queryItems[idx].enabled = !state.queryItems[idx].enabled;
-  },
-  updateQueryName: (state, id, name) => {
-    const idx = state.queryItems.findIndex(item => item.id === id);
-    state.queryItems[idx].name = name;
-  },
-  updateQueryValue: (state, id, value) => {
-    const idx = state.queryItems.findIndex(item => item.id === id);
-    state.queryItems[idx].value = value;
+  updateQuery: (state, queryItem) => {
+    const idx = state.queryItems.findIndex(item => item.id === queryItem.id);
+    state.queryItems[idx] = queryItem;
   },
   newHeader: (state, newItem) => state.headerItems.push(newItem),
   removeHeader: (state, id) =>
     (state.headerItems = state.headerItems.filter(item => item.id !== id)),
-  toggleHeaderEnabled: (state, id) => {
-    const idx = state.headerItems.findIndex(item => item.id === id);
-    state.headerItems[idx].enabled = !state.headerItems[idx].enabled;
+  updateHeader: (state, headerItem) => {
+    const idx = state.headerItems.findIndex(item => item.id === headerItem.id);
+    state.headerItems[idx] = headerItem;
   },
-  updateHeaderName: (state, id, name) => {
-    const idx = state.headerItems.findIndex(item => item.id === id);
-    state.headerItems[idx].name = name;
-  },
-  updateHeaderValue: (state, id, value) => {
-    const idx = state.headerItems.findIndex(item => item.id === id);
-    state.headerItems[idx].value = value;
+  newCookie: (state, newItem) => state.cookies.push(newItem),
+  removeCookie: (state, id) =>
+    (state.cookies = state.cookies.filter(item => item.id !== id)),
+  updateCookie: (state, cookieItem) => {
+    const idx = state.cookies.findIndex(item => item.id === cookieItem.id);
+    state.cookies[idx] = cookieItem;
   }
 };
 

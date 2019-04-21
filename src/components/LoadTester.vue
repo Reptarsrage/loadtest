@@ -30,6 +30,7 @@
       <v-tab>Body</v-tab>
       <v-tab>Query</v-tab>
       <v-tab>Headers</v-tab>
+      <v-tab>Cookies</v-tab>
       <v-tab-item>
         <LoadTesterOptions />
       </v-tab-item>
@@ -44,21 +45,25 @@
       <v-tab-item>
         <ListOfKeyValues
           :items="queryItems"
-          @updateQueryValue="updateQueryValue"
-          @uupdateQueryName="updateQueryName"
-          @utoggleQueryEnabled="toggleQueryEnabled"
-          @uremoveQuery="removeQuery"
-          @uaddQuery="addQuery"
+          @remove="removeQuery"
+          @add="addQuery"
+          @update="updateQuery"
         />
       </v-tab-item>
       <v-tab-item>
         <ListOfKeyValues
           :items="headerItems"
-          @uupdateQueryValue="updateHeaderValue"
-          @uupdateQueryName="updateHeaderName"
-          @utoggleQueryEnabled="toggleHeaderEnabled"
-          @uremoveQuery="removeHeader"
-          @uaddQuery="addHeader"
+          @remove="removeHeader"
+          @add="addHeader"
+          @update="updateHeader"
+        />
+      </v-tab-item>
+      <v-tab-item>
+        <ListOfKeyValues
+          :items="cookies"
+          @remove="removeCookie"
+          @add="addCookie"
+          @update="updateCookie"
         />
       </v-tab-item>
     </v-tabs>
@@ -88,16 +93,16 @@ export default {
       "updateMethod",
       "updateUrl",
       "updateBody",
-      "updateQueryValue",
-      "updateQueryName",
-      "toggleQueryEnabled",
       "removeQuery",
       "addQuery",
-      "updateHeaderValue",
-      "updateHeaderName",
-      "toggleHeaderEnabled",
+      "updateQuery",
+      "removeQuery",
+      "addHeader",
+      "updateHeader",
       "removeHeader",
-      "addHeader"
+      "addCookie",
+      "updateCookie",
+      "removeCookie"
     ])
   },
   computed: mapGetters([
@@ -106,7 +111,8 @@ export default {
     "url",
     "body",
     "queryItems",
-    "headerItems"
+    "headerItems",
+    "cookies"
   ])
 };
 </script>
