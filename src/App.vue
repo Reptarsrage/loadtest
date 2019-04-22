@@ -23,7 +23,7 @@
       <router-view />
     </v-content>
 
-    <v-footer>
+    <v-footer height="60">
       <v-layout row wrap justify-center>
         <v-flex xs12 class="center"><span>Made by Justin Robb</span></v-flex>
         <v-flex xs12 class="center">
