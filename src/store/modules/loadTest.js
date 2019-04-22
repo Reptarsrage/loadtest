@@ -1,9 +1,6 @@
 import uuid from "uuid";
-import hrtime from "browser-process-hrtime";
-import stdout from "browser-stdout";
-
-process.hrtime = hrtime;
-process.stdout = stdout();
+import axios from "axios";
+import io from "socket.io-client";
 
 const state = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -117,10 +114,6 @@ const actions = {
       headers[header.name] = header.value;
     }
 
-    const statusCallback = (error, result, latency) => {
-      commit("statusUpdate", { error, result, latency });
-    };
-
     const options = {
       concurrent: state.options.concurrent,
       requestsPerSecond: state.options.requestsPerSecond,
@@ -130,18 +123,33 @@ const actions = {
       headers,
       cookies: state.cookies
         .filter(cookie => cookie.enabled)
-        .map(cookie => `${cookie.name}=${cookie.name.value}`),
-      statusCallback
+        .map(cookie => `${cookie.name}=${cookie.name.value}`)
     };
 
-    const lt = require("../../lib/loadtest");
-    lt.loadTest(options, function(error) {
-      if (error) {
-        commit("statusUpdate", { error });
-      }
+    axios
+      .post("http://localhost:4200/", options)
+      .then(response => {
+        const { data } = response;
+        const { jobId } = data;
 
-      commit("end");
-    });
+        var socket = io.connect("http://localhost:4200");
+        socket.on("connect", () => {
+          socket.emit("join", jobId);
+        });
+
+        socket.on("disconnect", () => {
+          commit("end");
+        });
+
+        socket.on("end", () => {
+          socket.close();
+        });
+
+        socket.on("update", data => {
+          commit("statusUpdate", data);
+        });
+      })
+      .catch(console.error);
   }
 };
 
