@@ -1,4 +1,9 @@
 import uuid from "uuid";
+import hrtime from "browser-process-hrtime";
+import stdout from "browser-stdout";
+
+process.hrtime = hrtime;
+process.stdout = stdout();
 
 const state = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
@@ -30,19 +35,21 @@ const state = {
       confirm: null
     }
   ],
-  url: "",
+  url: "https://jsonplaceholder.typicode.com/todos/1",
   body: "",
   options: {
     valid: false,
-    maxRequests: null,
-    concurrency: null,
-    maxSeconds: null,
-    timeout: 0,
-    requestsPerSecond: null,
+    maxRequests: 10,
+    concurrency: 1,
+    maxSeconds: 30,
+    timeout: 10,
+    requestsPerSecond: 10,
     agentKeepAlive: null,
     indexParam: null,
     insecure: null
-  }
+  },
+  results: {},
+  loading: false
 };
 
 const getters = {
@@ -53,7 +60,9 @@ const getters = {
   queryItems: state => state.queryItems,
   headerItems: state => state.headerItems,
   cookies: state => state.cookies,
-  options: state => state.options
+  options: state => state.options,
+  loading: state => state.loading,
+  results: state => state.results
 };
 
 const actions = {
@@ -99,7 +108,41 @@ const actions = {
   },
   removeCookie: ({ commit }, id) => commit("removeCookie", id),
   updateCookie: ({ commit }, cookie) => commit("updateCookie", cookie),
-  updateOptions: ({ commit }, options) => commit("updateOptions", options)
+  updateOptions: ({ commit }, options) => commit("updateOptions", options),
+  start: ({ commit, state }) => {
+    commit("start");
+
+    const headers = {};
+    for (let header in state.headerItems.filter(header => header.enabled)) {
+      headers[header.name] = header.value;
+    }
+
+    const statusCallback = (error, result, latency) => {
+      commit("statusUpdate", { error, result, latency });
+    };
+
+    const options = {
+      concurrent: state.options.concurrent,
+      requestsPerSecond: state.options.requestsPerSecond,
+      maxSeconds: state.options.maxSeconds,
+      url: state.url,
+      method: state.method,
+      headers,
+      cookies: state.cookies
+        .filter(cookie => cookie.enabled)
+        .map(cookie => `${cookie.name}=${cookie.name.value}`),
+      statusCallback
+    };
+
+    const lt = require("../../lib/loadtest");
+    lt.loadTest(options, function(error) {
+      if (error) {
+        commit("statusUpdate", { error });
+      }
+
+      commit("end");
+    });
+  }
 };
 
 const mutations = {
@@ -127,7 +170,10 @@ const mutations = {
     const idx = state.cookies.findIndex(item => item.id === cookieItem.id);
     state.cookies[idx] = cookieItem;
   },
-  updateOptions: (state, options) => (state.options = options)
+  updateOptions: (state, options) => (state.options = options),
+  start: state => (state.loading = true),
+  end: state => (state.loading = false),
+  statusUpdate: (state, s) => (state.results = s)
 };
 
 export default {

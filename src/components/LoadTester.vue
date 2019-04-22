@@ -13,7 +13,7 @@
       </v-btn>
     </v-layout>
 
-    <v-layout text-xs-center wrap>
+    <v-layout text-xs-center wrap class="top-margin">
       <v-flex xs4 sm2>
         <v-select
           solo
@@ -38,7 +38,7 @@
       </v-flex>
     </v-layout>
 
-    <v-card>
+    <v-card class="top-margin">
       <v-tabs>
         <v-tab>Options</v-tab>
         <v-tab>Body</v-tab>
@@ -84,6 +84,15 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
+
+    <v-layout wrap class="top-margin">
+      <v-flex>
+        <span class="display-1">Results</span>
+      </v-flex>
+      <v-flex xs12>
+        <pre>{{ results }}</pre>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -95,7 +104,6 @@ import LoadTesterOptions from "./LoadTesterOptions";
 export default {
   name: "LoadTester",
   data: () => ({
-    loading: false,
     urlRules: [
       v => !!v || "Url is required",
       v =>
@@ -106,26 +114,22 @@ export default {
     ]
   }),
   components: { ListOfKeyValues, LoadTesterOptions },
-  methods: {
-    ...mapActions([
-      "updateMethod",
-      "updateUrl",
-      "updateBody",
-      "removeQuery",
-      "addQuery",
-      "updateQuery",
-      "removeQuery",
-      "addHeader",
-      "updateHeader",
-      "removeHeader",
-      "addCookie",
-      "updateCookie",
-      "removeCookie"
-    ]),
-    start() {
-      this.loading = true;
-    }
-  },
+  methods: mapActions([
+    "updateMethod",
+    "updateUrl",
+    "updateBody",
+    "removeQuery",
+    "addQuery",
+    "updateQuery",
+    "removeQuery",
+    "addHeader",
+    "updateHeader",
+    "removeHeader",
+    "addCookie",
+    "updateCookie",
+    "removeCookie",
+    "start"
+  ]),
   computed: mapGetters([
     "methods",
     "method",
@@ -133,12 +137,17 @@ export default {
     "body",
     "queryItems",
     "headerItems",
-    "cookies"
+    "cookies",
+    "results",
+    "loading"
   ])
 };
 </script>
 
 <style>
+.top-margin {
+  margin-top: 1rem;
+}
 .disabled-input {
   color: rgba(0, 0, 0, 0.38);
 }
