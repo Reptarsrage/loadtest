@@ -12,13 +12,13 @@
     </v-content>
 
     <v-footer>
-      <v-layout align-center justify-center>
-        <v-img
-          :src="require('./assets/meredith.svg')"
-          alt="meredith"
-          contain
-          height="30"
-        />
+      <v-layout row wrap justify-center>
+        <v-flex xs12 class="center"><span>Made by Justin Robb</span></v-flex>
+        <v-flex xs12 class="center">
+          <a href="https://github.com/Reptarsrage" target="_blank">
+            GitHub
+          </a>
+        </v-flex>
       </v-layout>
     </v-footer>
   </v-app>
@@ -30,3 +30,9 @@ export default {
   data: () => ({})
 };
 </script>
+
+<style scoped>
+.center {
+  text-align: center;
+}
+</style>
