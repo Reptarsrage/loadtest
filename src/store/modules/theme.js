@@ -1,5 +1,5 @@
 const state = {
-  darkTheme: false
+  darkTheme: localStorage.getItem("darkTheme") === "true"
 };
 
 const getters = {
@@ -7,7 +7,10 @@ const getters = {
 };
 
 const actions = {
-  toggleDarkTheme: ({ commit }) => commit("toggleDarkTheme")
+  toggleDarkTheme: ({ commit, state }) => {
+    localStorage.setItem("darkTheme", !state.darkTheme);
+    commit("toggleDarkTheme");
+  }
 };
 
 const mutations = {
