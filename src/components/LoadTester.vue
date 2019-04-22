@@ -51,7 +51,6 @@
         <v-tab-item>
           <v-textarea
             auto-grow
-            autofocus
             hint="paste in body content"
             placeholder="..."
             :value="body"
