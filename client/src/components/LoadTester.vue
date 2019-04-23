@@ -55,10 +55,27 @@
       <v-flex>
         <span class="display-1">Results</span>
       </v-flex>
-      <v-flex xs12>
-        <pre>{{ results }}</pre>
+      <v-flex xs12 v-if="results.length > 0">
+        <span>Total Time: {{ results[results.length - 1].totalTimeSeconds }}</span>
+      </v-flex>
+      <v-flex xs12 v-if="results.length > 0">
+        <span>Mean Latency: {{ results[results.length - 1].meanLatencyMs }}</span>
+      </v-flex>
+      <v-flex xs12 v-if="results.length > 0">
+        <span>Max Latency: {{ results[results.length - 1].maxLatencyMs }}</span>
+      </v-flex>
+      <v-flex xs12 v-if="results.length > 0">
+        <span>Min Latency: {{ results[results.length - 1].minLatencyMs }}</span>
       </v-flex>
     </v-layout>
+
+    <v-card>
+      <v-layout wrap class="top-margin">
+        <v-flex>
+          <LatencyChart />
+        </v-flex>
+      </v-layout>
+    </v-card>
   </v-container>
 </template>
 
@@ -66,6 +83,7 @@
 import { mapGetters, mapActions } from 'vuex';
 import ListOfKeyValues from './ListOfKeyValues';
 import LoadTesterOptions from './LoadTesterOptions';
+import LatencyChart from './LatencyChart';
 
 export default {
   name: 'LoadTester',
@@ -79,7 +97,7 @@ export default {
         'Invalid Url, must be http://, https:// or ws://',
     ],
   }),
-  components: { ListOfKeyValues, LoadTesterOptions },
+  components: { ListOfKeyValues, LoadTesterOptions, LatencyChart },
   methods: mapActions([
     'updateMethod',
     'updateUrl',

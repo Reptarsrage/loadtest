@@ -45,7 +45,33 @@ const state = {
     indexParam: null,
     insecure: null,
   },
-  results: {},
+  results: [],
+  latencyChartData: {
+    labels: [],
+    datasets: [
+      {
+        label: 'Mean latency (ms)',
+        backgroundColor: '#F44336',
+        borderColor: '#F44336',
+        fill: false,
+        data: [],
+      },
+      {
+        label: 'Max latency (ms)',
+        backgroundColor: '#2196F3',
+        borderColor: '#2196F3',
+        fill: false,
+        data: [],
+      },
+      {
+        label: 'Min latency (ms)',
+        backgroundColor: '#4CAF50',
+        borderColor: '#4CAF50',
+        fill: false,
+        data: [],
+      },
+    ],
+  },
   loading: false,
 };
 
@@ -60,6 +86,7 @@ const getters = {
   options: state => state.options,
   loading: state => state.loading,
   results: state => state.results,
+  latencyChartData: state => state.latencyChartData,
 };
 
 const actions = {
@@ -144,7 +171,14 @@ const actions = {
         });
 
         socket.on('update', data => {
-          commit('statusUpdate', data);
+          const { latency } = data;
+          const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = latency;
+          commit('statusUpdate', {
+            totalTimeSeconds: Math.floor(totalTimeSeconds),
+            meanLatencyMs: Math.floor(meanLatencyMs),
+            maxLatencyMs: Math.floor(maxLatencyMs),
+            minLatencyMs: Math.floor(minLatencyMs),
+          });
         });
       })
       .catch(console.error);
@@ -175,8 +209,28 @@ const mutations = {
   },
   updateOptions: (state, options) => (state.options = options),
   start: state => (state.loading = true),
-  end: state => (state.loading = false),
-  statusUpdate: (state, s) => (state.results = s),
+  end: state => {
+    state.loading = false;
+
+    const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = state.results[state.results.length - 1];
+    state.latencyChartData = { ...state.latencyChartData };
+    state.latencyChartData.labels.push(`${totalTimeSeconds}sec`);
+    state.latencyChartData.datasets[0].data.push(meanLatencyMs);
+    state.latencyChartData.datasets[1].data.push(maxLatencyMs);
+    state.latencyChartData.datasets[2].data.push(minLatencyMs);
+  },
+  statusUpdate: (state, s) => {
+    const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = s;
+
+    state.results.push(s);
+    if (totalTimeSeconds > 5 * state.latencyChartData.labels.length) {
+      state.latencyChartData = { ...state.latencyChartData };
+      state.latencyChartData.labels.push(`${5 * state.latencyChartData.labels.length}sec`);
+      state.latencyChartData.datasets[0].data.push(meanLatencyMs);
+      state.latencyChartData.datasets[1].data.push(maxLatencyMs);
+      state.latencyChartData.datasets[2].data.push(minLatencyMs);
+    }
+  },
 };
 
 export default {
