@@ -158,13 +158,16 @@ const actions = {
         .map(cookie => `${cookie.name}=${cookie.name.value}`),
     };
 
+    const PORT = 3000;
+    const HOST = 'localhost';
+
     axios
-      .post('http://localhost:3000/', options)
+      .post(`http://${HOST}:${PORT}`, options)
       .then(response => {
         const { data } = response;
         const { jobId } = data;
 
-        var socket = io.connect('http://localhost:3000');
+        var socket = io.connect(`http://${HOST}:${PORT}`);
         socket.on('connect', () => {
           socket.emit('join', jobId);
         });
@@ -206,7 +209,6 @@ const mutations = {
   newCookie: (state, newItem) => state.cookies.items.push(newItem),
   removeCookie: (state, id) => (state.cookies = state.cookies.items.filter(item => item.id !== id)),
   updateCookie: (state, cookies) => {
-    console.log({ ...cookies });
     state.cookies = { ...cookies };
   },
   updateOptions: (state, options) => (state.options = options),
