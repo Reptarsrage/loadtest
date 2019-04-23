@@ -1,6 +1,6 @@
 <template>
   <div class="small">
-    <line-chart :chart-data="latencyChartData" :options="options" :darkTheme="darkTheme"></line-chart>
+    <line-chart :chart-data="errorChartData" :options="options" :darkTheme="darkTheme"></line-chart>
   </div>
 </template>
 
@@ -9,7 +9,7 @@ import LineChart from './LineChart.js';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'LatencyChart',
+  name: 'ErrorChart',
   components: {
     LineChart,
   },
@@ -19,7 +19,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(['latencyChartData', 'darkTheme']),
+    ...mapGetters(['errorChartData', 'darkTheme']),
     options() {
       const fontColor = this.isDark() ? 'white' : 'black';
       const color = this.isDark() ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.2)';
@@ -40,7 +40,7 @@ export default {
         },
         title: {
           display: true,
-          text: 'Latency',
+          text: 'Errors',
           fontColor,
         },
         scales: {

@@ -46,6 +46,25 @@ const state = {
     insecure: null,
   },
   results: null,
+  errorChartData: {
+    labels: [],
+    datasets: [
+      {
+        label: 'Requests per second',
+        backgroundColor: '#F44336',
+        borderColor: '#F44336',
+        fill: false,
+        data: [],
+      },
+      {
+        label: 'Errors per second',
+        backgroundColor: '#2196F3',
+        borderColor: '#2196F3',
+        fill: false,
+        data: [],
+      },
+    ],
+  },
   latencyChartData: {
     labels: [],
     datasets: [
@@ -87,6 +106,7 @@ const getters = {
   loading: state => state.loading,
   results: state => state.results,
   latencyChartData: state => state.latencyChartData,
+  errorChartData: state => state.errorChartData,
 };
 
 const actions = {
@@ -163,6 +183,7 @@ const actions = {
         });
 
         socket.on('disconnect', () => {
+          commit('statusUpdate');
           commit('end');
         });
 
@@ -172,13 +193,7 @@ const actions = {
 
         socket.on('update', data => {
           const { latency } = data;
-          const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = latency;
-          commit('statusUpdate', {
-            totalTimeSeconds: Math.floor(totalTimeSeconds),
-            meanLatencyMs: Math.floor(meanLatencyMs),
-            maxLatencyMs: Math.floor(maxLatencyMs),
-            minLatencyMs: Math.floor(minLatencyMs),
-          });
+          commit('statusUpdate', latency);
         });
       })
       .catch(console.error);
@@ -209,26 +224,26 @@ const mutations = {
   },
   updateOptions: (state, options) => (state.options = options),
   start: state => (state.loading = true),
-  end: state => {
-    state.loading = false;
-
-    const { meanLatencyMs, maxLatencyMs, minLatencyMs } = state.results;
-    state.latencyChartData = { ...state.latencyChartData };
-    state.latencyChartData.labels.push(`${5 * state.latencyChartData.labels.length}sec`);
-    state.latencyChartData.datasets[0].data.push(meanLatencyMs);
-    state.latencyChartData.datasets[1].data.push(maxLatencyMs);
-    state.latencyChartData.datasets[2].data.push(minLatencyMs);
-  },
+  end: state => (state.loading = false),
   statusUpdate: (state, s) => {
-    const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = s;
+    const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs, totalRequests, totalErrors } =
+      s || state.results;
 
-    state.results = { ...s };
+    state.results = s ? { ...s } : state.results;
+
     if (totalTimeSeconds >= 5 * state.latencyChartData.labels.length) {
+      // latency chart
       state.latencyChartData = { ...state.latencyChartData };
-      state.latencyChartData.labels.push(`${5 * state.latencyChartData.labels.length}sec`);
-      state.latencyChartData.datasets[0].data.push(meanLatencyMs);
-      state.latencyChartData.datasets[1].data.push(maxLatencyMs);
-      state.latencyChartData.datasets[2].data.push(minLatencyMs);
+      state.latencyChartData.labels.push(5 * state.latencyChartData.labels.length);
+      state.latencyChartData.datasets[0].data.push(Math.floor(meanLatencyMs));
+      state.latencyChartData.datasets[1].data.push(Math.floor(maxLatencyMs));
+      state.latencyChartData.datasets[2].data.push(Math.floor(minLatencyMs));
+
+      // error chart
+      state.errorChartData = { ...state.errorChartData };
+      state.errorChartData.labels.push(5 * state.latencyChartData.labels.length);
+      state.errorChartData.datasets[0].data.push(Math.floor(totalRequests / totalTimeSeconds));
+      state.errorChartData.datasets[1].data.push(Math.floor(totalErrors / totalTimeSeconds));
     }
   },
 };

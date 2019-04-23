@@ -52,30 +52,55 @@
     </v-card>
 
     <v-layout wrap class="top-margin">
-      <v-flex>
+      <v-flex xs12>
         <span class="display-1">Results</span>
       </v-flex>
-      <v-flex xs12 v-if="results">
-        <span>Total Time: {{ results.totalTimeSeconds }}</span>
+      <v-flex md6 v-if="results">
+        <v-layout wrap>
+          <v-flex xs12>
+            <span>Total Time: {{ results.totalTimeSeconds }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>Mean Latency: {{ results.meanLatencyMs }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>Max Latency: {{ results.maxLatencyMs }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>Min Latency: {{ results.minLatencyMs }}</span>
+          </v-flex>
+        </v-layout>
       </v-flex>
-      <v-flex xs12 v-if="results">
-        <span>Mean Latency: {{ results.meanLatencyMs }}</span>
-      </v-flex>
-      <v-flex xs12 v-if="results">
-        <span>Max Latency: {{ results.maxLatencyMs }}</span>
-      </v-flex>
-      <v-flex xs12 v-if="results">
-        <span>Min Latency: {{ results.minLatencyMs }}</span>
+      <v-flex md6 v-if="results">
+        <v-layout wrap>
+          <v-flex xs12>
+            <span>Total Requests: {{ results.totalRequests }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>Total Errors: {{ results.totalErrors }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>RPS: {{ results.rps }}</span>
+          </v-flex>
+          <v-flex xs12>
+            <span>Error Codes: {{ JSON.stringify(results.errorCodes) }}</span>
+          </v-flex>
+        </v-layout>
       </v-flex>
     </v-layout>
 
-    <v-card>
-      <v-layout wrap class="top-margin">
-        <v-flex>
+    <v-layout wrap class="top-margin">
+      <v-flex lg6>
+        <v-card class="chart">
           <LatencyChart />
-        </v-flex>
-      </v-layout>
-    </v-card>
+        </v-card>
+      </v-flex>
+      <v-flex lg6>
+        <v-card class="chart">
+          <ErrorChart />
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -84,6 +109,7 @@ import { mapGetters, mapActions } from 'vuex';
 import ListOfKeyValues from './ListOfKeyValues';
 import LoadTesterOptions from './LoadTesterOptions';
 import LatencyChart from './LatencyChart';
+import ErrorChart from './ErrorChart';
 
 export default {
   name: 'LoadTester',
@@ -97,7 +123,7 @@ export default {
         'Invalid Url, must be http://, https:// or ws://',
     ],
   }),
-  components: { ListOfKeyValues, LoadTesterOptions, LatencyChart },
+  components: { ListOfKeyValues, LoadTesterOptions, LatencyChart, ErrorChart },
   methods: mapActions([
     'updateMethod',
     'updateUrl',
@@ -128,6 +154,9 @@ export default {
 </script>
 
 <style>
+.chart {
+  margin: 0.5rem;
+}
 .top-margin {
   margin-top: 1rem;
 }
