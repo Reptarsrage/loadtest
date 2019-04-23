@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row align-center justify-space-between>
       <span class="display-1">Options</span>
-      <v-btn :loading="loading" :disabled="loading" color="success" @click="start">
+      <v-btn id="start-button" :loading="loading" :disabled="loading" color="success" @click="start">
         <v-icon left>play_arrow</v-icon>
         <span>Start</span>
       </v-btn>
@@ -84,7 +84,6 @@ export default {
     'updateMethod',
     'updateUrl',
     'updateBody',
-    'removeQuery',
     'addQuery',
     'updateQuery',
     'removeQuery',
