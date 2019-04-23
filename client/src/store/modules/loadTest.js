@@ -45,7 +45,7 @@ const state = {
     indexParam: null,
     insecure: null,
   },
-  results: [],
+  results: null,
   latencyChartData: {
     labels: [],
     datasets: [
@@ -212,9 +212,9 @@ const mutations = {
   end: state => {
     state.loading = false;
 
-    const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = state.results[state.results.length - 1];
+    const { meanLatencyMs, maxLatencyMs, minLatencyMs } = state.results;
     state.latencyChartData = { ...state.latencyChartData };
-    state.latencyChartData.labels.push(`${totalTimeSeconds}sec`);
+    state.latencyChartData.labels.push(`${5 * state.latencyChartData.labels.length}sec`);
     state.latencyChartData.datasets[0].data.push(meanLatencyMs);
     state.latencyChartData.datasets[1].data.push(maxLatencyMs);
     state.latencyChartData.datasets[2].data.push(minLatencyMs);
@@ -222,8 +222,8 @@ const mutations = {
   statusUpdate: (state, s) => {
     const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs } = s;
 
-    state.results.push(s);
-    if (totalTimeSeconds > 5 * state.latencyChartData.labels.length) {
+    state.results = { ...s };
+    if (totalTimeSeconds >= 5 * state.latencyChartData.labels.length) {
       state.latencyChartData = { ...state.latencyChartData };
       state.latencyChartData.labels.push(`${5 * state.latencyChartData.labels.length}sec`);
       state.latencyChartData.datasets[0].data.push(meanLatencyMs);

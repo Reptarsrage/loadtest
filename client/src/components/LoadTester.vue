@@ -55,17 +55,17 @@
       <v-flex>
         <span class="display-1">Results</span>
       </v-flex>
-      <v-flex xs12 v-if="results.length > 0">
-        <span>Total Time: {{ results[results.length - 1].totalTimeSeconds }}</span>
+      <v-flex xs12 v-if="results">
+        <span>Total Time: {{ results.totalTimeSeconds }}</span>
       </v-flex>
-      <v-flex xs12 v-if="results.length > 0">
-        <span>Mean Latency: {{ results[results.length - 1].meanLatencyMs }}</span>
+      <v-flex xs12 v-if="results">
+        <span>Mean Latency: {{ results.meanLatencyMs }}</span>
       </v-flex>
-      <v-flex xs12 v-if="results.length > 0">
-        <span>Max Latency: {{ results[results.length - 1].maxLatencyMs }}</span>
+      <v-flex xs12 v-if="results">
+        <span>Max Latency: {{ results.maxLatencyMs }}</span>
       </v-flex>
-      <v-flex xs12 v-if="results.length > 0">
-        <span>Min Latency: {{ results[results.length - 1].minLatencyMs }}</span>
+      <v-flex xs12 v-if="results">
+        <span>Min Latency: {{ results.minLatencyMs }}</span>
       </v-flex>
     </v-layout>
 
