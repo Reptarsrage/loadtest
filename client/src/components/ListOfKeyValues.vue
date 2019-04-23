@@ -9,7 +9,7 @@
               placeholder="Name"
               required
               v-model="item.name"
-              :rules="index === options.items.length ? [] : nameRules"
+              :rules="index !== options.items.length && item.enabled ? nameRules : []"
               :disabled="!item.enabled"
               :value="item.name"
               @focus="onFocus(index)"
@@ -22,7 +22,7 @@
               placeholder="Value"
               required
               :disabled="!item.enabled"
-              :rules="index === options.items.length ? [] : valueRules"
+              :rules="index !== options.items.length && item.enabled ? nameRules : []"
               v-model="item.value"
               :value="item.value"
               @focus="onFocus(index)"
