@@ -31,15 +31,15 @@ const sanitizeOptions = options => {
   };
 
   if (isNotNullAndPositive(options.concurrency)) {
-    sanitized.concurrency = Math.max(1000, options.concurrency);
+    sanitized.concurrency = Math.min(1000, options.concurrency);
   }
 
   if (isNotNullAndPositive(options.maxRequests)) {
-    sanitized.maxRequests = Math.max(1000000, options.maxRequests);
+    sanitized.maxRequests = Math.min(1000000, options.maxRequests);
   }
 
   if (isNotNullAndPositive(options.maxSeconds)) {
-    sanitized.maxSeconds = Math.max(3600, options.maxSeconds);
+    sanitized.maxSeconds = Math.min(3600, options.maxSeconds);
   } else if (!('maxRequests' in sanitized)) {
     options.maxSeconds = 120; // make sure job ends
   }
