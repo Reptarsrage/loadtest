@@ -31,15 +31,17 @@ const sanitizeOptions = options => {
   };
 
   if (isNotNullAndPositive(options.concurrency)) {
-    sanitized.concurrency = options.concurrency;
+    sanitized.concurrency = Math.max(1000, options.concurrency);
   }
 
   if (isNotNullAndPositive(options.maxRequests)) {
-    sanitized.maxRequests = options.maxRequests;
+    sanitized.maxRequests = Math.max(1000000, options.maxRequests);
   }
 
   if (isNotNullAndPositive(options.maxSeconds)) {
-    sanitized.maxSeconds = options.maxSeconds;
+    sanitized.maxSeconds = Math.max(3600, options.maxSeconds);
+  } else if (!('maxRequests' in sanitized)) {
+    options.maxSeconds = 120; // make sure job ends
   }
 
   if (isNotNullAndPositive(options.timeout)) {
@@ -66,8 +68,10 @@ const sanitizeOptions = options => {
     sanitized.contentType = options.contentType;
   }
 
-  if (isNotNullAndPositive(options.requestsPerSecond)) {
+  if (isNotNullAndPositive(options.requestsPerSecond) && options.requestsPerSecond < 5000) {
     sanitized.requestsPerSecond = options.requestsPerSecond;
+  } else if (isNotNullAndPositive(options.requestsPerSecond)) {
+    options.requestsPerSecond = 5000;
   }
 
   if (isNotNullOrEmpty(options.indexParam)) {

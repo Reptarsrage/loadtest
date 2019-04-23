@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row align-center justify-space-between>
       <span class="display-1">Options</span>
-      <v-btn id="start-button" :loading="loading" :disabled="loading" color="success" @click="start">
+      <v-btn id="start-button" :loading="loading" :disabled="loading || !options.valid" color="success" @click="start">
         <v-icon left>play_arrow</v-icon>
         <span>Start</span>
       </v-btn>
@@ -28,7 +28,7 @@
 
     <v-card class="top-margin">
       <v-tabs>
-        <v-tab>Options</v-tab>
+        <v-tab :class="{ 'tab-error': !options.valid }">Options</v-tab>
         <v-tab>Body</v-tab>
         <v-tab>Query</v-tab>
         <v-tab>Headers</v-tab>
@@ -149,11 +149,15 @@ export default {
     'cookies',
     'results',
     'loading',
+    'options',
   ]),
 };
 </script>
 
 <style>
+.tab-error .v-tabs__item {
+  color: #ff5252;
+}
 .margin {
   margin: 0.5rem;
 }

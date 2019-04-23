@@ -4,36 +4,14 @@
       <v-layout wrap>
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="options.maxRequests"
-            :value="options.maxRequests"
-            @input="updateOptions(options)"
-            min="1"
-            label="Max results"
-            hint="A max number of requests; after they are reached the test will end"
-            type="number"
-          />
-        </v-flex>
-
-        <v-flex xs12 md4 lg2>
-          <v-text-field
             v-model="options.concurrency"
             :value="options.concurrency"
+            :rules="concurrencyRules"
             @input="updateOptions(options)"
             min="1"
+            max="1000"
             label="Concurrency"
             hint="How many clients to start in parallel"
-            type="number"
-          />
-        </v-flex>
-
-        <v-flex xs12 md4 lg2>
-          <v-text-field
-            v-model="options.maxSeconds"
-            :value="options.maxSeconds"
-            @input="updateOptions(options)"
-            min="1"
-            label="Max seconds"
-            hint="How long to run the tests"
             type="number"
           />
         </v-flex>
@@ -43,7 +21,7 @@
             v-model="options.requestsPerSecond"
             :value="options.requestsPerSecond"
             @input="updateOptions(options)"
-            :rules="[requestsPerSecondRule]"
+            :rules="requestsPerSecondRules"
             min="1"
             label="Max requests per second"
             hint="How many requests each client will send per second"
@@ -53,10 +31,40 @@
 
         <v-flex xs12 md4 lg2>
           <v-text-field
-            v-model="options.timeout"
-            :value="options.timeout"
+            v-model="options.maxRequests"
+            :value="options.maxRequests"
+            :rules="maxRequestsRules"
             @input="updateOptions(options)"
             min="1"
+            max="1000000"
+            label="Max results"
+            hint="A max number of requests; after they are reached the test will end"
+            type="number"
+          />
+        </v-flex>
+
+        <v-flex xs12 md4 lg2>
+          <v-text-field
+            v-model="options.maxSeconds"
+            :value="options.maxSeconds"
+            :rules="maxSecondsRules"
+            @input="updateOptions(options)"
+            min="1"
+            max="3600"
+            label="Max seconds"
+            hint="How long to run the tests"
+            type="number"
+          />
+        </v-flex>
+
+        <v-flex xs12 md4 lg2>
+          <v-text-field
+            v-model="options.timeout"
+            :value="options.timeout"
+            :rules="timeoutRules"
+            @input="updateOptions(options)"
+            min="1"
+            max="3600"
             label="Timeout"
             hint="Timeout for each generated request in milliseconds. Setting this to 0 disables timeout"
             required
@@ -103,13 +111,30 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'LoadTesterOptions',
-  computed: mapGetters(['url', 'options']),
-  methods: {
-    ...mapActions(['updateOptions']),
-    requestsPerSecondRule(v) {
-      return !(this.url.startsWith('ws:') && v) || 'requestsPerSecond not supported for WebSockets';
-    },
+  computed: {
+    ...mapGetters(['url', 'options']),
+    requestsPerSecondRules: () => [
+      v => v <= 5000 || 'requestsPerSecond must be less than 5000',
+      v => v >= 0 || 'requestsPerSecond must be greater than zero',
+    ],
+    maxRequestsRules: () => [
+      v => v <= 1000000 || 'maxRequests must be less than a million',
+      v => v >= 0 || 'maxRequests must be greater than zero',
+    ],
+    maxSecondsRules: () => [
+      v => v <= 5000 || 'maxSeconds must be less than 3600',
+      v => v >= 0 || 'maxSeconds must be greater than zero',
+    ],
+    timeoutRules: () => [
+      v => v <= 5000 || 'timeout must be less than 3600',
+      v => v >= 0 || 'timeout must be greater than zero',
+    ],
+    concurrencyRules: () => [
+      v => v <= 1000 || 'concurrency must be less than 1000',
+      v => v >= 0 || 'concurrency must be greater than zero',
+    ],
   },
+  methods: mapActions(['updateOptions']),
 };
 </script>
 
