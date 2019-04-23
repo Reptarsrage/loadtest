@@ -51,11 +51,11 @@
       </v-tabs>
     </v-card>
 
-    <v-layout wrap class="top-margin">
+    <v-layout wrap class="top-margin" v-if="results">
       <v-flex xs12>
         <span class="display-1">Results</span>
       </v-flex>
-      <v-flex md6 v-if="results">
+      <v-flex md6 class="left-padding">
         <v-layout wrap>
           <v-flex xs12>
             <span>Total Time: {{ results.totalTimeSeconds }}</span>
@@ -71,7 +71,7 @@
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex md6 v-if="results">
+      <v-flex md6 class="left-padding">
         <v-layout wrap>
           <v-flex xs12>
             <span>Total Requests: {{ results.totalRequests }}</span>
@@ -89,14 +89,14 @@
       </v-flex>
     </v-layout>
 
-    <v-layout wrap class="top-margin">
-      <v-flex lg6>
-        <v-card class="chart">
+    <v-layout wrap class="top-margin" v-if="results">
+      <v-flex xs12>
+        <v-card class="margin">
           <LatencyChart />
         </v-card>
       </v-flex>
-      <v-flex lg6>
-        <v-card class="chart">
+      <v-flex xs12>
+        <v-card class="margin">
           <ErrorChart />
         </v-card>
       </v-flex>
@@ -154,11 +154,15 @@ export default {
 </script>
 
 <style>
-.chart {
+.margin {
   margin: 0.5rem;
 }
 .top-margin {
   margin-top: 1rem;
+}
+.left-padding {
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
 }
 .disabled-input {
   color: rgba(0, 0, 0, 0.38);
