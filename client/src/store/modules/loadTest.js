@@ -97,8 +97,9 @@ const getters = {
 };
 
 const actions = {
-  updateMethod: ({ commit }, opts) => commit('updateMethod', opts),
-  updateUrl: ({ commit }, opts) => commit('updateUrl', opts),
+  updateMethod: ({ commit }, method) => commit('updateMethod', method),
+  updateUrl: ({ commit }, url) => commit('updateUrl', url),
+  updateValid: ({ commit }, valid) => commit('updateValid', valid),
   updateBody: ({ commit }, body) => commit('updateBody', body),
   addQuery: ({ commit }) => {
     const queryItem = {
@@ -190,14 +191,9 @@ const actions = {
 };
 
 const mutations = {
-  updateMethod: (state, { method, valid }) => {
-    state.valid = valid;
-    state.method = method;
-  },
-  updateUrl: (state, { url, valid }) => {
-    state.valid = valid;
-    state.url = url;
-  },
+  updateMethod: (state, method) => (state.method = method),
+  updateValid: (state, valid) => (state.valid = valid),
+  updateUrl: (state, url) => (state.url = url),
   updateBody: (state, body) => (state.body = body),
   newQuery: (state, newItem) => state.queryStringParams.items.push(newItem),
   removeQuery: (state, id) =>

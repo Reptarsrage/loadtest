@@ -2,14 +2,7 @@
   <v-form class="top-margin" v-model="valid">
     <v-layout text-xs-center wrap>
       <v-flex xs4 sm2>
-        <v-select
-          solo
-          label="Method"
-          hint="The method to use"
-          :items="methods"
-          :value="method"
-          @input="updateMethod({ method: $event, valid })"
-        />
+        <v-select solo label="Method" hint="The method to use" :items="methods" :value="method" @input="updateMethod" />
       </v-flex>
       <v-flex xs8 sm10>
         <v-text-field
@@ -20,7 +13,7 @@
           required
           :rules="urlRules"
           :value="url"
-          @input="updateUrl({ url: $event, valid })"
+          @input="updateUrl"
         />
       </v-flex>
     </v-layout>
@@ -44,9 +37,14 @@ export default {
     ],
   }),
   methods: {
-    ...mapActions(['updateMethod', 'updateUrl']),
+    ...mapActions(['updateMethod', 'updateUrl', 'updateValid']),
   },
   computed: mapGetters(['methods', 'method', 'url']),
+  watch: {
+    valid: function(val) {
+      this.updateValid(val);
+    },
+  },
 };
 </script>
 
