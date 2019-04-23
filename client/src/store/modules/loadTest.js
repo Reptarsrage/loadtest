@@ -5,33 +5,18 @@ import io from 'socket.io-client';
 const state = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   method: 'GET',
-  queryItems: [
-    {
-      id: uuid.v4(),
-      name: '',
-      value: '',
-      enabled: true,
-      confirm: null,
-    },
-  ],
-  headerItems: [
-    {
-      id: uuid.v4(),
-      name: '',
-      value: '',
-      enabled: true,
-      confirm: null,
-    },
-  ],
-  cookies: [
-    {
-      id: uuid.v4(),
-      name: '',
-      value: '',
-      enabled: true,
-      confirm: null,
-    },
-  ],
+  queryStringParams: {
+    valid: true,
+    items: [],
+  },
+  headers: {
+    valid: true,
+    items: [],
+  },
+  cookies: {
+    valid: true,
+    items: [],
+  },
   url: 'https://jsonplaceholder.typicode.com/todos/1',
   body: '',
   options: {
@@ -99,8 +84,8 @@ const getters = {
   method: state => state.method,
   url: state => state.url,
   body: state => state.body,
-  queryItems: state => state.queryItems,
-  headerItems: state => state.headerItems,
+  queryStringParams: state => state.queryStringParams,
+  headers: state => state.headers,
   cookies: state => state.cookies,
   options: state => state.options,
   loading: state => state.loading,
@@ -157,18 +142,18 @@ const actions = {
     commit('start');
 
     const headers = {};
-    for (let header in state.headerItems.filter(header => header.enabled)) {
+    for (let header in state.headers.items.filter(header => header.enabled)) {
       headers[header.name] = header.value;
     }
 
     const options = {
-      concurrent: state.options.concurrent,
-      requestsPerSecond: state.options.requestsPerSecond,
-      maxSeconds: state.options.maxSeconds,
+      ...state.options,
       url: state.url,
       method: state.method,
       headers,
-      cookies: state.cookies.filter(cookie => cookie.enabled).map(cookie => `${cookie.name}=${cookie.name.value}`),
+      cookies: state.cookies.items
+        .filter(cookie => cookie.enabled)
+        .map(cookie => `${cookie.name}=${cookie.name.value}`),
     };
 
     axios
@@ -203,23 +188,18 @@ const mutations = {
   updateMethod: (state, method) => (state.method = method),
   updateUrl: (state, url) => (state.url = url),
   updateBody: (state, body) => (state.body = body),
-  newQuery: (state, newItem) => state.queryItems.push(newItem),
-  removeQuery: (state, id) => (state.queryItems = state.queryItems.filter(item => item.id !== id)),
-  updateQuery: (state, queryItem) => {
-    const idx = state.queryItems.findIndex(item => item.id === queryItem.id);
-    state.queryItems[idx] = queryItem;
-  },
-  newHeader: (state, newItem) => state.headerItems.push(newItem),
-  removeHeader: (state, id) => (state.headerItems = state.headerItems.filter(item => item.id !== id)),
-  updateHeader: (state, headerItem) => {
-    const idx = state.headerItems.findIndex(item => item.id === headerItem.id);
-    state.headerItems[idx] = headerItem;
-  },
-  newCookie: (state, newItem) => state.cookies.push(newItem),
-  removeCookie: (state, id) => (state.cookies = state.cookies.filter(item => item.id !== id)),
-  updateCookie: (state, cookieItem) => {
-    const idx = state.cookies.findIndex(item => item.id === cookieItem.id);
-    state.cookies[idx] = cookieItem;
+  newQuery: (state, newItem) => state.queryStringParams.items.push(newItem),
+  removeQuery: (state, id) =>
+    (state.queryStringParams.items = state.queryStringParams.items.filter(item => item.id !== id)),
+  updateQuery: (state, queryStringParams) => (state.queryStringParams = { ...queryStringParams }),
+  newHeader: (state, newItem) => state.headers.items.push(newItem),
+  removeHeader: (state, id) => (state.headers.items = state.headers.items.filter(item => item.id !== id)),
+  updateHeader: (state, headers) => (state.headers = { ...headers }),
+  newCookie: (state, newItem) => state.cookies.items.push(newItem),
+  removeCookie: (state, id) => (state.cookies = state.cookies.items.filter(item => item.id !== id)),
+  updateCookie: (state, cookies) => {
+    console.log({ ...cookies });
+    state.cookies = { ...cookies };
   },
   updateOptions: (state, options) => (state.options = options),
   start: state => (state.loading = true),

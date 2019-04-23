@@ -2,7 +2,7 @@
   <v-container>
     <v-layout row align-center justify-space-between>
       <span class="display-1">Options</span>
-      <v-btn id="start-button" :loading="loading" :disabled="loading || !options.valid" color="success" @click="start">
+      <v-btn id="start-button" :loading="loading" :disabled="!checkValid()" color="success" @click="start">
         <v-icon left>play_arrow</v-icon>
         <span>Start</span>
       </v-btn>
@@ -30,9 +30,9 @@
       <v-tabs>
         <v-tab :class="{ 'tab-error': !options.valid }">Options</v-tab>
         <v-tab>Body</v-tab>
-        <v-tab>Query</v-tab>
-        <v-tab>Headers</v-tab>
-        <v-tab>Cookies</v-tab>
+        <v-tab :class="{ 'tab-error': !queryStringParams.valid }">Query</v-tab>
+        <v-tab :class="{ 'tab-error': !headers.valid }">Headers</v-tab>
+        <v-tab :class="{ 'tab-error': !cookies.valid }">Cookies</v-tab>
         <v-tab-item>
           <LoadTesterOptions />
         </v-tab-item>
@@ -40,13 +40,13 @@
           <v-textarea auto-grow hint="paste in body content" placeholder="..." :value="body" @input="updateBody" />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :items="queryItems" @remove="removeQuery" @add="addQuery" @update="updateQuery" />
+          <ListOfKeyValues :options="queryStringParams" @remove="removeQuery" @add="addQuery" @update="updateQuery" />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :items="headerItems" @remove="removeHeader" @add="addHeader" @update="updateHeader" />
+          <ListOfKeyValues :options="headers" @remove="removeHeader" @add="addHeader" @update="updateHeader" />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :items="cookies" @remove="removeCookie" @add="addCookie" @update="updateCookie" />
+          <ListOfKeyValues :options="cookies" @remove="removeCookie" @add="addCookie" @update="updateCookie" />
         </v-tab-item>
       </v-tabs>
     </v-card>
@@ -124,28 +124,35 @@ export default {
     ],
   }),
   components: { ListOfKeyValues, LoadTesterOptions, LatencyChart, ErrorChart },
-  methods: mapActions([
-    'updateMethod',
-    'updateUrl',
-    'updateBody',
-    'addQuery',
-    'updateQuery',
-    'removeQuery',
-    'addHeader',
-    'updateHeader',
-    'removeHeader',
-    'addCookie',
-    'updateCookie',
-    'removeCookie',
-    'start',
-  ]),
+  methods: {
+    ...mapActions([
+      'updateMethod',
+      'updateUrl',
+      'updateBody',
+      'addQuery',
+      'updateQuery',
+      'removeQuery',
+      'addHeader',
+      'updateHeader',
+      'removeHeader',
+      'addCookie',
+      'updateCookie',
+      'removeCookie',
+      'start',
+    ]),
+    checkValid() {
+      return (
+        !this.loading && this.options.valid && this.headers.valid && this.cookies.valid && this.queryStringParams.valid
+      );
+    },
+  },
   computed: mapGetters([
     'methods',
     'method',
     'url',
     'body',
-    'queryItems',
-    'headerItems',
+    'queryStringParams',
+    'headers',
     'cookies',
     'results',
     'loading',
