@@ -3,11 +3,11 @@
 </template>
 
 <script>
-import LoadTester from "../components/LoadTester";
+import LoadTester from '../components/LoadTester';
 
 export default {
   components: {
-    LoadTester
-  }
+    LoadTester,
+  },
 };
 </script>

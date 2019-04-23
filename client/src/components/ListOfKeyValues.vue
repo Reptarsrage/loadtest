@@ -52,25 +52,25 @@
 
 <script>
 export default {
-  name: "ListOfKeyValues",
-  props: ["items"],
+  name: 'ListOfKeyValues',
+  props: ['items'],
   methods: {
     onFocus(index) {
       if (this.items.length - 1 === index) {
-        this.$emit("add");
+        this.$emit('add');
       } else if (this.items[index].confirm) {
         this.items[index].confirm = null;
-        this.$emit("update", this.items[index]);
+        this.$emit('update', this.items[index]);
       }
     },
     confirmRemove(item) {
       if (item.confirm) {
-        this.$emit("update", item);
+        this.$emit('update', item);
       } else {
-        this.$emit("remove", item.id);
+        this.$emit('remove', item.id);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -99,20 +99,17 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  name: "LoadTesterOptions",
-  computed: mapGetters(["url", "options"]),
+  name: 'LoadTesterOptions',
+  computed: mapGetters(['url', 'options']),
   methods: {
-    ...mapActions(["updateOptions"]),
+    ...mapActions(['updateOptions']),
     requestsPerSecondRule(v) {
-      return (
-        !(this.url.startsWith("ws:") && v) ||
-        "requestsPerSecond not supported for WebSockets"
-      );
-    }
-  }
+      return !(this.url.startsWith('ws:') && v) || 'requestsPerSecond not supported for WebSockets';
+    },
+  },
 };
 </script>
 

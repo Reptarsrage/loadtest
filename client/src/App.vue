@@ -14,7 +14,7 @@
               <v-icon v-else>wb_sunny</v-icon>
             </v-btn>
           </template>
-          <span>Switch to {{ darkTheme ? "light" : "dark" }} theme</span>
+          <span>Switch to {{ darkTheme ? 'light' : 'dark' }} theme</span>
         </v-tooltip>
       </v-toolbar-items>
     </v-toolbar>
@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions } from 'vuex';
 export default {
-  name: "App",
-  computed: mapGetters(["darkTheme"]),
-  methods: mapActions(["toggleDarkTheme"])
+  name: 'App',
+  computed: mapGetters(['darkTheme']),
+  methods: mapActions(['toggleDarkTheme']),
 };
 </script>
 
