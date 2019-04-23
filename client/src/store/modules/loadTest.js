@@ -127,12 +127,12 @@ const actions = {
     };
 
     axios
-      .post("http://localhost:4200/", options)
+      .post("http://localhost:3000/", options)
       .then(response => {
         const { data } = response;
         const { jobId } = data;
 
-        var socket = io.connect("http://localhost:4200");
+        var socket = io.connect("http://localhost:3000");
         socket.on("connect", () => {
           socket.emit("join", jobId);
         });

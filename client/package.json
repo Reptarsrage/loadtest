@@ -1,7 +1,7 @@
 {
-  "name": "vue-practice-app",
-  "version": "0.1.0",
-  "private": true,
+  "name": "loadtest-client",
+  "version": "1.0.0",
+  "license": "UNLICENSED",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -47,7 +47,6 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "license": "UNLICENSED",
   "lint-staged": {
     "*.{js,vue}": [
       "vue-cli-service lint",
