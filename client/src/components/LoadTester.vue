@@ -90,12 +90,12 @@
     </v-layout>
 
     <v-layout wrap class="top-margin" v-if="results">
-      <v-flex xs12>
+      <v-flex xs12 xl6>
         <v-card class="margin">
           <LatencyChart />
         </v-card>
       </v-flex>
-      <v-flex xs12>
+      <v-flex xs12 xl6>
         <v-card class="margin">
           <ErrorChart />
         </v-card>
