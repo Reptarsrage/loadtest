@@ -192,8 +192,7 @@ const actions = {
         });
 
         socket.on('update', data => {
-          const { latency } = data;
-          commit('statusUpdate', latency);
+          commit('statusUpdate', data);
         });
       })
       .catch(console.error);
