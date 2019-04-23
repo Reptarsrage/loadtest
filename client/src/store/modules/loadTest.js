@@ -3,6 +3,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 
 const state = {
+  valid: false,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   method: 'GET',
   queryStringParams: {
@@ -82,6 +83,7 @@ const state = {
 const getters = {
   methods: state => state.methods,
   method: state => state.method,
+  valid: state => state.valid,
   url: state => state.url,
   body: state => state.body,
   queryStringParams: state => state.queryStringParams,
@@ -95,8 +97,8 @@ const getters = {
 };
 
 const actions = {
-  updateMethod: ({ commit }, method) => commit('updateMethod', method),
-  updateUrl: ({ commit }, url) => commit('updateUrl', url),
+  updateMethod: ({ commit }, opts) => commit('updateMethod', opts),
+  updateUrl: ({ commit }, opts) => commit('updateUrl', opts),
   updateBody: ({ commit }, body) => commit('updateBody', body),
   addQuery: ({ commit }) => {
     const queryItem = {
@@ -185,8 +187,14 @@ const actions = {
 };
 
 const mutations = {
-  updateMethod: (state, method) => (state.method = method),
-  updateUrl: (state, url) => (state.url = url),
+  updateMethod: (state, { method, valid }) => {
+    state.valid = valid;
+    state.method = method;
+  },
+  updateUrl: (state, { url, valid }) => {
+    state.valid = valid;
+    state.url = url;
+  },
   updateBody: (state, body) => (state.body = body),
   newQuery: (state, newItem) => state.queryStringParams.items.push(newItem),
   removeQuery: (state, id) =>

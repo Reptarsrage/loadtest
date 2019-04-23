@@ -8,23 +8,7 @@
       </v-btn>
     </v-layout>
 
-    <v-layout text-xs-center wrap class="top-margin">
-      <v-flex xs4 sm2>
-        <v-select solo label="Method" hint="The method to use" :items="methods" :value="method" @input="updateMethod" />
-      </v-flex>
-      <v-flex xs8 sm10>
-        <v-text-field
-          solo
-          placeholder="https://api.meredith.services/v1/api"
-          label="Url"
-          hint="Mandatory URL to access"
-          required
-          :rules="urlRules"
-          :value="url"
-          @input="updateUrl"
-        />
-      </v-flex>
-    </v-layout>
+    <ChooseUrl />
 
     <v-card class="top-margin">
       <v-tabs>
@@ -40,13 +24,13 @@
           <v-textarea auto-grow hint="paste in body content" placeholder="..." :value="body" @input="updateBody" />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :options="queryStringParams" @remove="removeQuery" @add="addQuery" @update="updateQuery" />
+          <QueryOptions />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :options="headers" @remove="removeHeader" @add="addHeader" @update="updateHeader" />
+          <HeaderOptions />
         </v-tab-item>
         <v-tab-item>
-          <ListOfKeyValues :options="cookies" @remove="removeCookie" @add="addCookie" @update="updateCookie" />
+          <CookieOptions />
         </v-tab-item>
       </v-tabs>
     </v-card>
@@ -106,58 +90,31 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import ListOfKeyValues from './ListOfKeyValues';
+import QueryOptions from './QueryOptions';
+import CookieOptions from './CookieOptions';
+import HeaderOptions from './HeaderOptions';
 import LoadTesterOptions from './LoadTesterOptions';
 import LatencyChart from './LatencyChart';
 import ErrorChart from './ErrorChart';
+import ChooseUrl from './ChooseUrl';
 
 export default {
   name: 'LoadTester',
-  data: () => ({
-    urlRules: [
-      v => !!v || 'Url is required',
-      v =>
-        v.startsWith('http://') ||
-        v.startsWith('https://') ||
-        v.startsWith('ws://') ||
-        'Invalid Url, must be http://, https:// or ws://',
-    ],
-  }),
-  components: { ListOfKeyValues, LoadTesterOptions, LatencyChart, ErrorChart },
+  components: { QueryOptions, CookieOptions, HeaderOptions, LoadTesterOptions, LatencyChart, ErrorChart, ChooseUrl },
   methods: {
-    ...mapActions([
-      'updateMethod',
-      'updateUrl',
-      'updateBody',
-      'addQuery',
-      'updateQuery',
-      'removeQuery',
-      'addHeader',
-      'updateHeader',
-      'removeHeader',
-      'addCookie',
-      'updateCookie',
-      'removeCookie',
-      'start',
-    ]),
+    ...mapActions(['updateBody', 'start']),
     checkValid() {
       return (
-        !this.loading && this.options.valid && this.headers.valid && this.cookies.valid && this.queryStringParams.valid
+        !this.loading &&
+        this.valid &&
+        this.options.valid &&
+        this.headers.valid &&
+        this.cookies.valid &&
+        this.queryStringParams.valid
       );
     },
   },
-  computed: mapGetters([
-    'methods',
-    'method',
-    'url',
-    'body',
-    'queryStringParams',
-    'headers',
-    'cookies',
-    'results',
-    'loading',
-    'options',
-  ]),
+  computed: mapGetters(['body', 'queryStringParams', 'headers', 'cookies', 'results', 'loading', 'options', 'valid']),
 };
 </script>
 

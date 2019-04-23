@@ -2,7 +2,7 @@
   <v-form v-model="options.valid">
     <v-container>
       <v-layout wrap>
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.concurrency"
             :value="options.concurrency"
@@ -16,7 +16,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.requestsPerSecond"
             :value="options.requestsPerSecond"
@@ -29,7 +29,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.maxRequests"
             :value="options.maxRequests"
@@ -43,7 +43,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.maxSeconds"
             :value="options.maxSeconds"
@@ -57,7 +57,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.timeout"
             :value="options.timeout"
@@ -72,7 +72,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-text-field
             v-model="options.indexParam"
             :value="options.indexParam"
@@ -82,7 +82,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-checkbox
             v-model="options.agentKeepAlive"
             :value="options.agentKeepAlive"
@@ -92,7 +92,7 @@
           />
         </v-flex>
 
-        <v-flex xs12 md4 lg2>
+        <v-flex xs12 md4 lg3>
           <v-checkbox
             v-model="options.insecure"
             :value="options.insecure"
