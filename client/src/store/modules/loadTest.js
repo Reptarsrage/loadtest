@@ -208,7 +208,24 @@ const mutations = {
     state.cookies = { ...cookies };
   },
   updateOptions: (state, options) => (state.options = options),
-  start: state => (state.loading = true),
+  start: state => {
+    state.loading = true;
+    state.latencyChartData = {
+      ...state.latencyChartData,
+      labels: [],
+      datasets: [
+        { ...state.latencyChartData.datasets[0], data: [] },
+        { ...state.latencyChartData.datasets[1], data: [] },
+        { ...state.latencyChartData.datasets[2], data: [] },
+      ],
+    };
+
+    state.errorChartData = {
+      ...state.errorChartData,
+      labels: [],
+      datasets: [{ ...state.errorChartData.datasets[0], data: [] }, { ...state.errorChartData.datasets[1], data: [] }],
+    };
+  },
   end: state => (state.loading = false),
   statusUpdate: (state, s) => {
     const { totalTimeSeconds, meanLatencyMs, maxLatencyMs, minLatencyMs, totalRequests, totalErrors } =
