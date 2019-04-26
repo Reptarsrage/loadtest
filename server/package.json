@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "dependencies": {
-    "body-parser": "1.18.3",
+    "body-parser": "1.19.0",
     "cors": "2.8.5",
     "express": "4.16.4",
     "loadtest": "3.0.7",
