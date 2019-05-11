@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - latest
+cache: yarn
+install:
+  - yarn -g codecov
+  - yarn install
+script:
+  - yarn test
+  - yarn build
+after_success:
+  - codecov
