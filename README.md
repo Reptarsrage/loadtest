@@ -2,6 +2,9 @@
 
 Runs configurable load tests against web API endpoints
 
+[![Travis CI](https://travis-ci.org/Reptarsrage/loadtest.svg?branch=master)](https://travis-ci.org/Reptarsrage/loadtest)
+[![CodeCov](https://codecov.io/gh/Reptarsrage/loadtest/branch/master/graph/badge.svg)](https://codecov.io/gh/Reptarsrage/loadtest)
+
 ## Build Setup
 
 ``` bash
