@@ -1,6 +1,6 @@
-# loadtest
+# Load Test
 
-> Runs configurable load tests against web API endpoints
+Runs configurable load tests against web API endpoints
 
 ## Build Setup
 
@@ -20,3 +20,13 @@ $ yarn run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+## Docker
+
+```bash
+# Build a nuxt-docker image
+$ docker build -t loadtest .
+
+# Run the container for the nuxt-docker image with a exposed port 3000
+$ docker run --rm -it -p 3000:3000 loadtest
+```
