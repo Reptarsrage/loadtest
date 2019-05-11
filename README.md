@@ -1,26 +1,32 @@
-# LoadTest
+# Load Test
 
-## Instructions
+Runs configurable load tests against web API endpoints
 
-- [Client](./client/README.md)
-- [Server](./server/README.md)
+## Build Setup
+
+``` bash
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn run dev
+
+# build for production and launch server
+$ yarn run build
+$ yarn start
+
+# generate static project
+$ yarn run generate
+```
+
+For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
 
 ## Docker
 
-### Build
+```bash
+# Build a nuxt-docker image
+$ docker build -t loadtest .
 
-```sh
-docker-compose build
-```
-
-### Run
-
-```sh
-docker-compose up
-```
-
-### Stop
-
-```sh
-docker-compose down
+# Run the container for the nuxt-docker image with a exposed port 3000
+$ docker run --rm -it -p 3000:3000 loadtest
 ```
