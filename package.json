@@ -64,7 +64,7 @@
     "jest": "24.8.0",
     "lint-staged": "8.1.6",
     "nodemon": "1.19.0",
-    "prettier": "1.17.0",
+    "prettier": "1.18.2",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
     "vue-jest": "3.0.4"
