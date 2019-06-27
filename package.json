@@ -60,7 +60,7 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.0",
     "eslint-plugin-vue": "5.2.2",
-    "husky": "2.2.0",
+    "husky": "2.7.0",
     "jest": "24.8.0",
     "lint-staged": "8.1.6",
     "nodemon": "1.19.0",
