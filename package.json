@@ -39,7 +39,7 @@
     "timers-browserify": "2.0.10",
     "uuid": "3.3.2",
     "vue-chartjs": "3.4.2",
-    "vuetify": "1.5.14",
+    "vuetify": "1.5.16",
     "vuetify-loader": "1.2.2"
   },
   "devDependencies": {
