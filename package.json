@@ -63,7 +63,7 @@
     "husky": "2.7.0",
     "jest": "24.8.0",
     "lint-staged": "8.2.1",
-    "nodemon": "1.19.0",
+    "nodemon": "1.19.1",
     "prettier": "1.18.2",
     "stylus": "0.54.5",
     "stylus-loader": "3.0.2",
