@@ -7497,15 +7497,14 @@ loadjs@^3.6.1:
   resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-3.6.1.tgz#1e756ccd4f4c5ed4988085b330e1b4ad9b6a8340"
   integrity sha512-AZEBw2GWdJk2IzBgQ+Wohoao5j+t0rajqK8dJu8jQqgYxDTxhmCt0ayMo/vCa0ZAMvZxnJcam6uLICfnVd8KAw==
 
-loadtest@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-3.1.0.tgz#bcad6a1c489f865cf9514b0a91b38e0c6fc1fad6"
-  integrity sha512-5tO8lac9DBsO/Camnqpp8ZFR8Yeve/tURMjPy3422FasaKfrNFm2UcvBoYHMYxAl6EG/OkIztkZqtGPd9Qw1sg==
+loadtest@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-4.2.0.tgz#c752da47cf1397089ebc8d901140fc33bda3b733"
+  integrity sha512-mcdOvWdtaMn14+K1goNyoE7+snJL9p9xy92z5e+WoRX7VdJ1kQO4wWnPdQvXuUsgk0Hhb9swT/n+nXUnf6fkcQ==
   dependencies:
     agentkeepalive "^2.0.3"
     https-proxy-agent "^2.2.1"
     log "1.4.*"
-    prototypes ">= 0.4.3"
     stdio "^0.2.3"
     testing "^1.1.1"
     websocket "^1.0.28"
@@ -9684,11 +9683,6 @@ proto-list@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
-
-"prototypes@>= 0.4.3":
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/prototypes/-/prototypes-2.3.5.tgz#9ec5236ec299a85379214606c73186389f0efed9"
-  integrity sha512-Nci0TWpCnv5RBbQSW4XpA5MPVljlRX9Q9uDNyxmzsoWBX4pQ/X2pDo3HC7ks3ksmEmeetZDRPPE3kwWb46vDpw==
 
 proxy-addr@~2.0.4, proxy-addr@~2.0.5:
   version "2.0.5"
