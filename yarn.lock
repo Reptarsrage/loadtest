@@ -3657,6 +3657,14 @@ configstore@^3.0.0:
     write-file-atomic "^2.0.0"
     xdg-basedir "^3.0.0"
 
+confinode@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/confinode/-/confinode-2.1.1.tgz#6831961ca48fb3c9f7d5ff063022e2bc40bea86e"
+  integrity sha512-u5u0ZHpYMnVWtelxjalNtLvL+SdP7B/7s0JTFUIkyvqqIf67DAvy6SKaE6WZiwbufLPk+6zJKsh5SdpbtbFi9g==
+  dependencies:
+    quick-lru "^5.0.0"
+    yaml "^1.7.2"
+
 connect@^3.7.0:
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/connect/-/connect-3.7.0.tgz#5d49348910caa5e07a01800b030d0c35f20484f8"
@@ -7580,15 +7588,15 @@ loadjs@^4.2.0:
   resolved "https://registry.yarnpkg.com/loadjs/-/loadjs-4.2.0.tgz#2a0336376397a6a43edf98c9ec3229ddd5abb6f6"
   integrity sha512-AgQGZisAlTPbTEzrHPb6q+NYBMD+DP9uvGSIjSUM5uG+0jG15cb8axWpxuOIqrmQjn6scaaH8JwloiP27b2KXA==
 
-loadtest@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-3.1.0.tgz#bcad6a1c489f865cf9514b0a91b38e0c6fc1fad6"
-  integrity sha512-5tO8lac9DBsO/Camnqpp8ZFR8Yeve/tURMjPy3422FasaKfrNFm2UcvBoYHMYxAl6EG/OkIztkZqtGPd9Qw1sg==
+loadtest@5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/loadtest/-/loadtest-5.2.0.tgz#f31df754297d0f9dab390f2253cfa3544b23b363"
+  integrity sha512-SwTA3n/IZIqLJHOulycT1fszToe0yck7QUkU8nV4kHSUuamzSmofohjLlwI2vcrZrR1kA3ZC6aDAS04lgCHS0g==
   dependencies:
     agentkeepalive "^2.0.3"
+    confinode "^2.1.1"
     https-proxy-agent "^2.2.1"
     log "1.4.*"
-    prototypes ">= 0.4.3"
     stdio "^0.2.3"
     testing "^1.1.1"
     websocket "^1.0.28"
@@ -9794,11 +9802,6 @@ proto-list@~1.2.1:
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
   integrity sha1-IS1b/hMYMGpCD2QCuOJv85ZHqEk=
 
-"prototypes@>= 0.4.3":
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/prototypes/-/prototypes-2.3.5.tgz#9ec5236ec299a85379214606c73186389f0efed9"
-  integrity sha512-Nci0TWpCnv5RBbQSW4XpA5MPVljlRX9Q9uDNyxmzsoWBX4pQ/X2pDo3HC7ks3ksmEmeetZDRPPE3kwWb46vDpw==
-
 proxy-addr@~2.0.4, proxy-addr@~2.0.5:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/proxy-addr/-/proxy-addr-2.0.5.tgz#34cbd64a2d81f4b1fd21e76f9f06c8a45299ee34"
@@ -9911,6 +9914,11 @@ querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
+
+quick-lru@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-5.1.1.tgz#366493e6b3e42a3a6885e2e99d18f80fb7a8c932"
+  integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.1.0"
@@ -12669,6 +12677,11 @@ yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
+
+yaml@^1.7.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
+  integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==
 
 yargs-parser@^13.1.1:
   version "13.1.1"
