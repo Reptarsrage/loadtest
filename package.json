@@ -28,7 +28,7 @@
     "@nuxtjs/axios": "5.9.5",
     "@nuxtjs/pwa": "2.6.0",
     "body-parser": "1.19.0",
-    "chart.js": "2.9.3",
+    "chart.js": "2.9.4",
     "cors": "2.8.5",
     "cross-env": "5.2.1",
     "express": "4.17.1",
